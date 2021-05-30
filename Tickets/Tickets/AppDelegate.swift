@@ -19,14 +19,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         dbQueue = createAndOpenDatabase()//create and open database
+        
         if(createTables() == false)
         {
-            print("Error in Creatin Tables")
+            print("Error in Creating Tables")
         }
         else
         {
             print("YAY table create")
         }
+        
         return true
     }
 
@@ -44,14 +46,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
-    func createAndOpenDatabase() -> OpaquePointer? {
+    func createAndOpenDatabase() -> OpaquePointer?
+    {
         var db: OpaquePointer?
+        
         let url = NSURL(fileURLWithPath: dbURL)
+        
         if let pathComponent = url.appendingPathComponent("tickets.sqlite")
         {
             let filePath = pathComponent.path
-            if sqlite3_open(filePath, &db) == SQLITE_OK {
+            
+            if sqlite3_open(filePath, &db) == SQLITE_OK
+            {
                 print("Successfuly opened the database :) \(filePath)")
+                
                 return db
             }
             else{
